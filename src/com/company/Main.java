@@ -46,6 +46,9 @@ public class Main {
 
         checker(anotherArray);
 
+        libShuffle(absences);
+        libSort(absences);
+
     }
     public static boolean checker (ArrayList<String> array){
         for (int i = 0; i < array.size(); i++) {
@@ -168,5 +171,17 @@ public class Main {
         }
         int count = absences.size() - abs.size();
         return count;
+    }
+
+    public static void libShuffle(ArrayList<Integer> absences){
+        for (int num : absences) {
+            Collections.shuffle(absences);
+        }
+    }
+
+    public static void libSort(ArrayList<Integer> absences){
+        for (int num : absences) {
+            Collections.sort(absences);
+        }
     }
 }
