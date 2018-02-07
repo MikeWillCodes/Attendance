@@ -4,14 +4,18 @@ import java.util.*;
 
 public class Main {
 
+    public static final int FINAL_SIZE = 10;
+
     public static void main(String[] args) {
         //Driver
         greeting();
 
         ArrayList<Integer> absences = new ArrayList<>();
+        initialize(FINAL_SIZE, absences);
 
-        attendanceTracker(absences);
+        attendanceTracker();
         System.out.println("The elements are: " + absences);
+
 
         perfectAttendance(absences);
         int count = perfectAttendance(absences);
@@ -28,79 +32,38 @@ public class Main {
         int nums = greaterThanY(absences,3,5);
         System.out.println("Numbers greater than Y add 5: " + nums);
 
-
-        ArrayList<String> names = initializeNames();
-        System.out.println("The names are: " + names);
-
-        names = shuffle(names);
-        System.out.println("Shuffled names: " + names);
-
-        count = unique(absences);
-        System.out.println("Number of unique absences: " + count);
-
         int dups = uniqueSet(absences);
         System.out.println("There are " +dups+" duplicate absences");
 
-        ArrayList<String> anotherArray = anotherArray(20, names);
-        System.out.println(anotherArray);
+        ArrayList<Integer> shuffle = libShuffle(absences);
+        System.out.println("The shuffle: " + shuffle );
 
-        checker(anotherArray);
+        userDefinedShuffle(FINAL_SIZE, absences);
 
-        libShuffle(absences);
-        libSort(absences);
+        ArrayList<Integer> sort = libSort(absences);
+        System.out.println("The sort: " + sort);
 
-    }
-    public static boolean checker (ArrayList<String> array){
-        for (int i = 0; i < array.size(); i++) {
-            String name = array.get(i);
-            if(array.equals(name)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static ArrayList<String> initializeNames (){
-        // create and output an arrayList of 5 distinct names
-        ArrayList<String> names = new ArrayList<>();
-        names.add("Michael");
-        names.add("Desmond");
-        names.add("Mike");
-        names.add("Prince");
-        names.add("Vivian");
-        return names;
-    }
-
-    public static ArrayList shuffle (ArrayList<String> names){
-        // shuffle the names using a user defined function
-        Collections.shuffle(names);
-        return names;
-    }
-
-    public static ArrayList<String> anotherArray (int size, ArrayList<String> names){
-        Random random = new Random();
-        ArrayList<String> anotherListOfNames = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-        int pick = random.nextInt(names.size());
-        anotherListOfNames.add(names.get(pick));
-        }
-        return anotherListOfNames;
     }
 
     public static void greeting (){
         System.out.println(" \n Hello \n");
     }
 
-    public static void attendanceTracker ( ArrayList<Integer> absences){
+    public static void attendanceTracker (){
         Scanner scan = new Scanner(System.in);
         String user = scan.next();
         System.out.println(" \nHello " + user.toUpperCase());
+    }
+
+    public static ArrayList<Integer> initialize (int size, ArrayList<Integer> absences){
         Random rand = new Random();
-        for (int i = 0; i < user.length(); i++) {
+        for (int i = 0; i < size; i++) {
             int num = rand.nextInt(11);
             absences.add(num);
         }
+        return absences;
     }
+
     // count how many students had perfect attendance
     public static int perfectAttendance (ArrayList<Integer> absences) {
         int count = 0;
@@ -154,16 +117,6 @@ public class Main {
         return nums;
     }
 
-    public static int unique (ArrayList<Integer> absences) {
-        int count = 0;
-        for (int i = 0; i < absences.size(); i++) {
-            if (absences.get(i) == i) {
-                count++;
-            }
-        }
-        return count;
-    }
-
     public static int uniqueSet (ArrayList<Integer> absences){
         Set<Integer> abs = new HashSet<>();
         for (int i = 0; i < absences.size(); i++) {
@@ -173,15 +126,23 @@ public class Main {
         return count;
     }
 
-    public static void libShuffle(ArrayList<Integer> absences){
-        for (int num : absences) {
+    public static ArrayList<Integer> libShuffle(ArrayList<Integer> absences){
             Collections.shuffle(absences);
+            return absences;
+    }
+
+    public static void userDefinedShuffle( int size, ArrayList<Integer> absences){
+        Random rand = new Random();
+        for (int i = 0; i < size; i++) {
+            int shuffle = rand.nextInt(absences.size());
+            int temp = absences.get(shuffle);
+            absences.set(shuffle, absences.get(i));
+            absences.set(absences.get(i), temp);
         }
     }
 
-    public static void libSort(ArrayList<Integer> absences){
-        for (int num : absences) {
+    public static ArrayList<Integer> libSort(ArrayList<Integer> absences){
             Collections.sort(absences);
-        }
+            return absences;
     }
 }
